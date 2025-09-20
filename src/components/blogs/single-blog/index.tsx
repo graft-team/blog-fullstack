@@ -72,8 +72,8 @@ export default function SingleBlog({
             <div>
               <FaTrash
                 onClick={() => handleDelete(id)}
-                size={30}
-                className="cursor-pointer"
+                size={20}
+                className="cursor-pointer sm:w-6 sm:h-6"
               />
             </div>
           </div>

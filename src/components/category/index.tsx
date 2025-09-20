@@ -90,7 +90,7 @@ export default function CategoryList({ list }: { list: Blog[] }) {
                         className="mb-6 border-b border-body-color border-opacity-10 pb-6 dark:border-white dark:border-opacity-10"
                         key={item.id}
                       >
-                        <div className="flex items-center lg:block xl:flex">
+                        <div className="flex items-center sm:flex-col sm:items-start lg:block xl:flex">
                           <div className="mr-5 lg:mb-3 xl:mb-0">
                             <div className="relative h-[60px] w-[70px] overflow-hidden rounded-md sm:h-[75px] sm:w-[85px]">
                               {item.image && (item.image.startsWith('http://') || item.image.startsWith('https://')) ? (

@@ -50,7 +50,7 @@ export default function Header() {
       >
         <div className="container">
           <div className="relative -mx-4 flex items-center justify-between">
-            <div className="w-full max-w-[200px] sm:max-w-[240px] px-4 xl:mr-12">
+            <div className="w-full max-w-[150px] sm:max-w-[200px] md:max-w-[240px] px-2 sm:px-4 xl:mr-12">
               <Link
                 href={"/"}
                 className={`text-[30px] font-extrabold cursor-pointer block w-full
@@ -66,7 +66,7 @@ export default function Header() {
                   onClick={handleNavbarToggle}
                   id="navbarToggler"
                   aria-label="Mobile Menu"
-                  className="absolute right-4 top-1/2 block translate-y-[-50%] rounded-lg px-3 py-[6px] ring-primary focus:ring-2 lg:hidden"
+                  className="absolute right-2 sm:right-4 top-1/2 block translate-y-[-50%] rounded-lg px-2 sm:px-3 py-[6px] ring-primary focus:ring-2 lg:hidden"
                 >
                   <span
                     className={`relative my-1.5 block h-0.5 w-[30px] bg-black transition-all duration-300 dark:bg-white
@@ -86,8 +86,8 @@ export default function Header() {
                 </button>
                 <nav
                   id="navbarCollapse"
-                  className={`absolute right-0 z-30 w-[250px] rounded border-[.5px] bg-white border-body-color/50 py-4 
-                px-6 duration-300 dark:border-body-color/20 dark:bg-dark lg:visible lg:static lg:w-auto lg:border-none lg:!bg-transparent lg:p-0 lg:opacity-100
+                  className={`absolute right-0 z-30 w-[200px] sm:w-[250px] rounded border-[.5px] bg-white border-body-color/50 py-4
+                px-4 sm:px-6 duration-300 dark:border-body-color/20 dark:bg-dark lg:visible lg:static lg:w-auto lg:border-none lg:!bg-transparent lg:p-0 lg:opacity-100
 
                 ${
                   navbarOpen
@@ -107,10 +107,25 @@ export default function Header() {
                         </Link>
                       </li>
                     ))}
+                    {/* Mobile menu items */}
+                    <li className="lg:hidden border-t border-body-color border-opacity-10 dark:border-white dark:border-opacity-10 mt-4 pt-4">
+                      <div className="flex flex-col gap-3">
+                        <Button
+                          onClick={() => {
+                            router.push("/create");
+                            setNavbarOpen(false);
+                          }}
+                          text="Create"
+                        />
+                        <div className="flex justify-center">
+                          <ThemeToggler />
+                        </div>
+                      </div>
+                    </li>
                   </ul>
                 </nav>
               </div>
-              <div className="flex gap-4 items-center justify-end pr-16 lg:pr-0">
+              <div className="hidden lg:flex gap-2 sm:gap-4 items-center justify-end pr-4 sm:pr-8 lg:pr-0">
                 <Button
                   onClick={() => router.push("/create")}
                   text="Create"
