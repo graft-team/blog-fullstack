@@ -23,7 +23,7 @@ export default function CategoryList({ list }: { list: Blog[] }) {
 
   return (
     <>
-      <section className="overflow-hidden pt-[180px] pb-[120px]">
+      <section className="overflow-hidden pt-[120px] pb-[60px] md:pt-[150px] md:pb-[80px] lg:pt-[180px] lg:pb-[120px]">
         <div className="container">
           <div className="-mx-4 flex flex-wrap">
             <div className="w-full px-4 lg:w-8/12">

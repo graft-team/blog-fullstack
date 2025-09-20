@@ -45,11 +45,11 @@ export default function SingleBlog({
             {title}
           </Link>
         </h3>
-        <p className="h-[20px] text-ellipsis overflow-hidden whitespace-nowrap mb-6 pb-6 text-base font-medium text-body-color dark:border-white dark:border-opacity-10">
+        <p className="min-h-[20px] text-ellipsis overflow-hidden whitespace-nowrap mb-6 pb-6 text-base font-medium text-body-color dark:border-white dark:border-opacity-10">
           {description}
         </p>
-        <div className="flex items-center justify-between">
-          <div className="flex items-center xl:mr-3 xl:pr-3 2xl:mr-5 2xl:pr-5">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-center mb-4 sm:mb-0 xl:mr-3 xl:pr-3 2xl:mr-5 2xl:pr-5">
             <div className="mr-4">
               <div className="h-10 relative w-10 overflow-hidden rounded-full">
                 {userimage ? (

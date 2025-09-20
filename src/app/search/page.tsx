@@ -64,7 +64,7 @@ export default function Search() {
               </div>
             </div>
           </div>
-          <section className="pt-[80px] w-full pb-[120px]">
+          <section className="pt-[80px] pb-[60px] md:pt-[100px] md:pb-[80px] lg:pt-[120px] lg:pb-[120px] w-full">
             <div className="container">
               <div className="-mx-4 flex flex-wrap">
                 {searchResults && searchResults.length ? (

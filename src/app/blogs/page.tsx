@@ -30,7 +30,7 @@ export default function Blogs() {
 
   return (
     <div>
-      <div className="pt-[140px] flex items-center justify-center">
+      <div className="pt-[120px] pb-[60px] md:pt-[140px] md:pb-[80px] flex items-center justify-center">
         <Button text="Reset to Dummy Data" onClick={handleResetToDummy} />
       </div>
       <BlogList lists={blogPostsList} />
