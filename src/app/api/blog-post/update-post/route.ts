@@ -1,36 +1,39 @@
-import prisma from "@/database";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function PUT(request: NextRequest) {
   try {
     const extractData = await request.json();
 
-    const updatedBlogPost = await prisma.post.update({
-      where: {
-        id: Number(extractData.id),
-      },
-      data: {
-        comments: extractData.comments,
-      },
+    let existingPosts = [];
+    if (typeof window !== 'undefined') {
+      const storedPosts = localStorage.getItem('blogPosts');
+      if (storedPosts) {
+        existingPosts = JSON.parse(storedPosts);
+      }
+    }
+
+    const updatedPosts = existingPosts.map((post: any) => {
+      if (post.id === extractData.id) {
+        return {
+          ...post,
+          ...extractData,
+          updatedAt: new Date().toISOString()
+        };
+      }
+      return post;
     });
 
-    if (updatedBlogPost) {
-      return NextResponse.json({
-        success: true,
-        message: "Blog post updated",
-      });
-    } else {
-      return NextResponse.json({
-        success: false,
-        message: "failed to update the post ! Please try again",
-      });
-    }
-  } catch (e) {
-    console.log(e);
+    localStorage.setItem('blogPosts', JSON.stringify(updatedPosts));
 
     return NextResponse.json({
+      success: true,
+      message: "Post berhasil diperbarui"
+    });
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json({
       success: false,
-      message: "Something went wrong ! Please try again",
+      message: "Terjadi kesalahan saat memperbarui post"
     });
   }
 }

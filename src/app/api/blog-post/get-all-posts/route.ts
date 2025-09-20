@@ -1,26 +1,24 @@
-import prisma from "@/database";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
   try {
-    const getAllBlogPosts = await prisma.post.findMany();
-    if (getAllBlogPosts && getAllBlogPosts.length) {
-      return NextResponse.json({
-        success: true,
-        data: getAllBlogPosts,
-      });
-    } else {
-      return NextResponse.json({
-        success: false,
-        message: "Failed to fetch blog posts. Please try again",
-      });
+    let existingPosts = [];
+    if (typeof window !== 'undefined') {
+      const storedPosts = localStorage.getItem('blogPosts');
+      if (storedPosts) {
+        existingPosts = JSON.parse(storedPosts);
+      }
     }
-  } catch (e) {
-    console.log(e);
 
     return NextResponse.json({
+      success: true,
+      data: existingPosts
+    });
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json({
       success: false,
-      message: "Something went wrong ! Please try again",
+      message: "Terjadi kesalahan saat mengambil semua post"
     });
   }
 }

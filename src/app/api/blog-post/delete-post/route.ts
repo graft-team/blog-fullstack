@@ -1,4 +1,3 @@
-import prisma from "@/database";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function DELETE(req: NextRequest) {
@@ -6,29 +5,26 @@ export async function DELETE(req: NextRequest) {
     const url = new URL(req.url);
     const extractIdOfBlogItemToBeDeleted = url.searchParams.get("id");
 
-    const deletedBlogPost = await prisma.post.delete({
-      where: {
-        id: Number(extractIdOfBlogItemToBeDeleted),
-      },
-    });
-
-    if (deletedBlogPost) {
-      return NextResponse.json({
-        success: true,
-        message: "Blog deleted successfully",
-      });
-    } else {
-      return NextResponse.json({
-        success: false,
-        message: "Failed to delete the blog ! Please try again",
-      });
+    let existingPosts = [];
+    if (typeof window !== 'undefined') {
+      const storedPosts = localStorage.getItem('blogPosts');
+      if (storedPosts) {
+        existingPosts = JSON.parse(storedPosts);
+      }
     }
-  } catch (e) {
-    console.log(e);
+
+    const updatedPosts = existingPosts.filter((post: any) => post.id !== extractIdOfBlogItemToBeDeleted);
+    localStorage.setItem('blogPosts', JSON.stringify(updatedPosts));
 
     return NextResponse.json({
+      success: true,
+      message: "Post berhasil dihapus"
+    });
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json({
       success: false,
-      message: "Something went wrong ! Please try again",
+      message: "Terjadi kesalahan saat menghapus post"
     });
   }
 }

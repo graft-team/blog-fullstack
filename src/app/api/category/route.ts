@@ -1,4 +1,3 @@
-import prisma from "@/database";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
@@ -6,11 +5,17 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     const extractCategoryID = searchParams.get("categoryID");
 
-    const getBlogPostListBasedOnCurrentCategoryID = await prisma.post.findMany({
-      where: {
-        category: extractCategoryID || "",
-      },
-    });
+    // Get posts from localStorage
+    let posts = [];
+    if (typeof window !== 'undefined') {
+      const storedPosts = localStorage.getItem('posts');
+      posts = storedPosts ? JSON.parse(storedPosts) : [];
+    }
+
+    // Filter posts by category
+    const getBlogPostListBasedOnCurrentCategoryID = posts.filter(
+      (post: any) => post.category === (extractCategoryID || "")
+    );
 
     if (getBlogPostListBasedOnCurrentCategoryID) {
       return NextResponse.json({

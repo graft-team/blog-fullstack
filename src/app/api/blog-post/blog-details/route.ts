@@ -1,4 +1,3 @@
-import prisma from "@/database";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
@@ -6,11 +5,15 @@ export async function GET(req: NextRequest) {
     const url = new URL(req.url);
     const blogID = url.searchParams.get("blogID");
 
-    const blogDetails = await prisma.post.findUnique({
-      where: {
-        id: Number(blogID),
-      },
-    });
+    // Get blog posts from localStorage
+    let blogPosts = [];
+    if (typeof window !== 'undefined') {
+      const storedPosts = localStorage.getItem('blogPosts');
+      blogPosts = storedPosts ? JSON.parse(storedPosts) : [];
+    }
+
+    // Find the specific blog post
+    const blogDetails = blogPosts.find((post: any) => post.id === Number(blogID));
 
     if (blogDetails) {
       return NextResponse.json({

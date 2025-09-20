@@ -1,4 +1,3 @@
-import prisma from "@/database";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
@@ -6,21 +5,18 @@ export async function GET(req: NextRequest) {
     const url = new URL(req.url);
     const extractQuery = url.searchParams.get("query");
 
-    const searchPostList = await prisma.post.findMany({
-      where: {
-        OR: [
-          {
-            title: {
-              contains: extractQuery || "",
-            },
-          },
-          {
-            description: {
-              contains: extractQuery || "",
-            },
-          },
-        ],
-      },
+    // Get posts from localStorage
+    let posts = [];
+    if (typeof window !== 'undefined') {
+      const storedPosts = localStorage.getItem('posts');
+      posts = storedPosts ? JSON.parse(storedPosts) : [];
+    }
+
+    // Filter posts based on search query
+    const searchPostList = posts.filter((post: any) => {
+      const titleMatch = post.title.toLowerCase().includes((extractQuery || '').toLowerCase());
+      const descriptionMatch = post.description.toLowerCase().includes((extractQuery || '').toLowerCase());
+      return titleMatch || descriptionMatch;
     });
 
     if (searchPostList) {
